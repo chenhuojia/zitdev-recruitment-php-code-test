@@ -2,6 +2,7 @@
 
 namespace Test\Service;
 
+use App\Service\AppLogger;
 use PHPUnit\Framework\TestCase;
 use App\Service\ProductHandler;
 
@@ -10,59 +11,45 @@ use App\Service\ProductHandler;
  */
 class ProductHandlerTest extends TestCase
 {
-    private $products = [
-        [
-            'id' => 1,
-            'name' => 'Coca-cola',
-            'type' => 'Drinks',
-            'price' => 10,
-            'create_at' => '2021-04-20 10:00:00',
-        ],
-        [
-            'id' => 2,
-            'name' => 'Persi',
-            'type' => 'Drinks',
-            'price' => 5,
-            'create_at' => '2021-04-21 09:00:00',
-        ],
-        [
-            'id' => 3,
-            'name' => 'Ham Sandwich',
-            'type' => 'Sandwich',
-            'price' => 45,
-            'create_at' => '2021-04-20 19:00:00',
-        ],
-        [
-            'id' => 4,
-            'name' => 'Cup cake',
-            'type' => 'Dessert',
-            'price' => 35,
-            'create_at' => '2021-04-18 08:45:00',
-        ],
-        [
-            'id' => 5,
-            'name' => 'New York Cheese Cake',
-            'type' => 'Dessert',
-            'price' => 40,
-            'create_at' => '2021-04-19 14:38:00',
-        ],
-        [
-            'id' => 6,
-            'name' => 'Lemon Tea',
-            'type' => 'Drinks',
-            'price' => 8,
-            'create_at' => '2021-04-04 19:23:00',
-        ],
-    ];
+    private $productService;
 
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->productService = new ProductHandler();
+    }
+
+    /**
+     * 计算商品总金额
+     * @doesNotPerformAssertions
+     */
     public function testGetTotalPrice()
     {
-        $totalPrice = 0;
-        foreach ($this->products as $product) {
-            $price = $product['price'] ?: 0;
-            $totalPrice += $price;
-        }
+        echo PHP_EOL;
+        echo '题目1 计算商品总金额'.PHP_EOL;
+        (new AppLogger())->info('商家总金额：'.$this->productService->testGetTotalPrice().PHP_EOL);
+    }
 
-        $this->assertEquals(143, $totalPrice);
+    /**
+     * 过滤Dessert类型产品并排序
+     * @doesNotPerformAssertions
+     * @return array
+     */
+    public function testSortAndFilterProduct()
+    {
+        echo PHP_EOL;
+        echo '题目1 筛选Dessert类型产品并排序'.PHP_EOL;
+        (new AppLogger())->info(var_export($this->productService->testSortAndFilterProduct(),true).PHP_EOL);
+    }
+
+    /**
+     * 转化时间戳
+     * @doesNotPerformAssertions
+     */
+    public function testChangeCreatedAt()
+    {
+        echo PHP_EOL;
+        echo '题目1 转化时间戳'.PHP_EOL;
+        (new AppLogger())->info(var_export($this->productService->testChangeCreatedAt(),true).PHP_EOL);
     }
 }
